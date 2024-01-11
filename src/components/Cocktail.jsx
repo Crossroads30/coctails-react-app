@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useGlobalContext } from '../context'
 
 const Cocktail = ({ id, name, image, info, glass }) => {
+	const {	setSearchTerm } = useGlobalContext()
 	return (
 		<article className='cocktail'>
 			<div className='img-container'>
@@ -11,7 +13,7 @@ const Cocktail = ({ id, name, image, info, glass }) => {
         <h3>{name}</h3>
         <h4>{glass}</h4>
         <p>{info}</p>
-        <Link to={`/cocktail/${id}`} className='btn btn-primary'>
+        <Link onClick={() => setSearchTerm('a')} to={`/cocktail/${id}`} className='btn btn-primary'>
           details
         </Link>
       </div>
