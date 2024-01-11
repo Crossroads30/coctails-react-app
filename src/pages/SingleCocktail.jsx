@@ -38,6 +38,7 @@ const SingleCocktail = () => {
 						strIngredient5,
 					]
 					const newCocktail = {
+						//this is not destructuring, this an object with ES6 naming(key.name = value.name)!!!
 						name,
 						image,
 						info,
@@ -46,9 +47,11 @@ const SingleCocktail = () => {
 						instructions,
 						ingredients,
 					}
+					setCocktail(newCocktail)
 				} else {
 					setCocktail(null)
 				}
+				setLoading(false)
 			} catch (error) {
 				console.log(error)
 				setLoading(false)
@@ -57,10 +60,51 @@ const SingleCocktail = () => {
 		getCocktail()
 	}, [id])
 
+	if (loading) {
+		return <Loading />
+	}
+	if (!cocktail) {
+		return <h2 className='section-title'>no cocktail to display</h2>
+	}
+
+	const { name, image, info, category, glass, instructions, ingredients } =
+		cocktail
 	return (
-		<div>
-			<h2>{id}</h2>
-		</div>
+		<section className='section cocktail-section'>
+			<Link className='btn btn-primary'>back home</Link>
+			<h2 className='section-title'>{name}</h2>
+			<div className='drink'>
+				<img src={image} alt={name} />
+				<div className='drink-info'>
+					<p>
+						<span className='drink-data'>name :</span>
+						{name}
+					</p>
+					<p>
+						<span className='drink-data'>category :</span>
+						{category}
+					</p>
+					<p>
+						<span className='drink-data'>info :</span>
+						{info}
+					</p>
+					<p>
+						<span className='drink-data'>glass :</span>
+						{glass}
+					</p>
+					<p>
+						<span className='drink-data'>instructions :</span>
+						{instructions}
+					</p>
+					<p>
+						<span className='drink-data'>ingrediens :</span>
+						{ingredients.map((item, index) => {
+							return item ? <span key={index}>{item}</span> : null
+						})}
+					</p>
+				</div>
+			</div>
+		</section>
 	)
 }
 
